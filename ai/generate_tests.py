@@ -35,7 +35,8 @@ Regeln:
 14. Erzeuge Request-Bodies mit Map.of statt mit String-Verkettung.
 15. Vermeide doppelten Code durch private Hilfsmethoden, zum Beispiel register(email, password).
 16. Verwende die konkreten Beispielwerte aus der Story exakt, zum Beispiel die genannte Anzahl Leerzeichen oder die genannten Titel.
-17. Nenne im Kommentar zu Oberflaechen-Teilen nur Schritte, die woertlich in der Story stehen. Erfinde keine zusaetzlichen Anforderungen."""
+17. Nenne im Kommentar zu Oberflaechen-Teilen nur Schritte, die woertlich in der Story stehen. Erfinde keine zusaetzlichen Anforderungen.
+18. Jede Pruefung muss fehlschlagen koennen, wenn die App sich falsch verhaelt. Pruefe keine Dinge, die unabhaengig vom getesteten Schritt immer gelten. Beweise zum Beispiel, dass nach einem fehlgeschlagenen Login niemand angemeldet ist, dadurch, dass die Antwort keinen Token enthaelt."""
 
 
 def generate_test(story_key):
