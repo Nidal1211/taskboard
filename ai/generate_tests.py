@@ -33,7 +33,9 @@ Regeln:
 12. Pruefe jede Und-Zeile eines Szenarios. Wenn ein Szenario sagt, dass etwas nicht angelegt oder nicht veraendert wird, beweise das mit einer weiteren Anfrage, zum Beispiel einer erneuten Registrierung oder einem Login.
 13. Enthaelt ein Szenario teilweise Oberflaechen-Schritte, teste den API-Teil und nenne die Oberflaechen-Teile im Kommentar am Anfang der Klasse.
 14. Erzeuge Request-Bodies mit Map.of statt mit String-Verkettung.
-15. Vermeide doppelten Code durch private Hilfsmethoden, zum Beispiel register(email, password)."""
+15. Vermeide doppelten Code durch private Hilfsmethoden, zum Beispiel register(email, password).
+16. Verwende die konkreten Beispielwerte aus der Story exakt, zum Beispiel die genannte Anzahl Leerzeichen oder die genannten Titel.
+17. Nenne im Kommentar zu Oberflaechen-Teilen nur Schritte, die woertlich in der Story stehen. Erfinde keine zusaetzlichen Anforderungen."""
 
 
 def generate_test(story_key):
