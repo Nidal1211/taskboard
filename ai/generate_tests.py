@@ -29,7 +29,11 @@ Regeln:
 8. Rufe vor jedem Test POST /test/reset auf (@BeforeEach).
 9. Die Basis-URL kommt aus der System-Property baseUrl, Standardwert http://localhost:8080.
 10. Jeder Test prueft den Statuscode und die relevanten Felder oder die Meldung.
-11. Antworte nur mit dem Java-Code, ohne Erklaerungen und ohne Markdown."""
+11. Antworte nur mit dem Java-Code, ohne Erklaerungen und ohne Markdown.
+12. Pruefe jede Und-Zeile eines Szenarios. Wenn ein Szenario sagt, dass etwas nicht angelegt oder nicht veraendert wird, beweise das mit einer weiteren Anfrage, zum Beispiel einer erneuten Registrierung oder einem Login.
+13. Enthaelt ein Szenario teilweise Oberflaechen-Schritte, teste den API-Teil und nenne die Oberflaechen-Teile im Kommentar am Anfang der Klasse.
+14. Erzeuge Request-Bodies mit Map.of statt mit String-Verkettung.
+15. Vermeide doppelten Code durch private Hilfsmethoden, zum Beispiel register(email, password)."""
 
 
 def generate_test(story_key):
@@ -48,7 +52,12 @@ def generate_test(story_key):
         }],
     )
 
-    code = message.content[0].text.strip()
+    if message.stop_reason == "max_tokens":
+     raise RuntimeError("Antwort wurde abgeschnitten, max_tokens erhöhen")
+
+    code = "".join(block.text for block in message.content if block.type == "text").strip()
+    if not code:
+        raise RuntimeError("Claude hat keinen Code zurückgegeben")
     code = re.sub(r"^```\w*\n|```$", "", code).strip()
 
     TEST_DIR.mkdir(parents=True, exist_ok=True)
