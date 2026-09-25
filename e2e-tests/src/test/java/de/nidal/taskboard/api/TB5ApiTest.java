@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -134,7 +133,7 @@ public class TB5ApiTest {
 
     @Test
     @DisplayName("Suche nach einem Teil des Titels")
-    void percheNachTeilDesTitels() {
+    void sucheNachTeilDesTitels() {
         String token = setupThreeTasks();
 
         getTasks(token, Map.of("search", "Einkauf"))
@@ -147,7 +146,7 @@ public class TB5ApiTest {
 
     @Test
     @DisplayName("Suche ohne Beachtung der Groß- und Kleinschreibung")
-    void percheOhneGrossKleinschreibung() {
+    void sucheOhneGrossKleinschreibung() {
         String token = setupThreeTasks();
 
         getTasks(token, Map.of("search", "einkauf"))
@@ -185,7 +184,7 @@ public class TB5ApiTest {
 
     @Test
     @DisplayName("Suche zurücksetzen")
-    void percheZuruecksetzen() {
+    void sucheZuruecksetzen() {
         String token = setupThreeTasks();
 
         // Gegeben: Suche nach "Urlaub" liefert kein Ergebnis
