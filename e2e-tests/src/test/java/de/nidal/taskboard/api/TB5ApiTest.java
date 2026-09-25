@@ -24,8 +24,7 @@ import static org.hamcrest.Matchers.*;
 @Tag("TB-5")
 public class TB5ApiTest {
 
-    private static final String BASE_URL =
-            System.getProperty("baseUrl", "http://localhost:8080");
+    private static final String BASE_URL = System.getProperty("baseUrl", "http://localhost:8080");
 
     @BeforeEach
     void setUp() {
@@ -175,7 +174,8 @@ public class TB5ApiTest {
     void keineTreffer() {
         String token = setupThreeTasks();
 
-        // Die Meldung "Keine Aufgaben gefunden" ist laut Vertrag kein Teil der API-Antwort,
+        // Die Meldung "Keine Aufgaben gefunden" ist laut Vertrag kein Teil der
+        // API-Antwort,
         // sie wird nur in der Oberflaeche angezeigt. Die API liefert eine leere Liste.
         getTasks(token, Map.of("search", "Urlaub"))
                 .then()
@@ -194,7 +194,8 @@ public class TB5ApiTest {
                 .statusCode(200)
                 .body("$", hasSize(0));
 
-        // Wenn das Suchfeld geleert wird, entspricht das einer Anfrage ohne Suchparameter
+        // Wenn das Suchfeld geleert wird, entspricht das einer Anfrage ohne
+        // Suchparameter
         getTasks(token, null)
                 .then()
                 .statusCode(200)
