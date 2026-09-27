@@ -56,4 +56,12 @@ public class Task {
     public User getOwner() {
         return owner;
     }
+
+    public void rename(String title) {
+        this.title = title;
+    }
+
+    public void changeStatus(TaskStatus status) {
+        this.status = status;
+    }
 }
