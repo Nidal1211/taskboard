@@ -32,8 +32,23 @@ public class TaskService {
         return TaskResponse.from(task);
     }
 
-    public List<TaskResponse> list(Long userId) {
-        return taskRepository.findByOwnerIdOrderByIdAsc(userId).stream()
+    public List<TaskResponse> list(Long userId, String status, String search) {
+        boolean hasStatus = status != null && !status.isBlank();
+        boolean hasSearch = search != null && !search.isBlank();
+
+        List<Task> tasks;
+        if (hasStatus && hasSearch) {
+            tasks = taskRepository.findByOwnerIdAndStatusAndTitleContainingIgnoreCaseOrderByIdAsc(
+                    userId, parseStatus(status), search);
+        } else if (hasStatus) {
+            tasks = taskRepository.findByOwnerIdAndStatusOrderByIdAsc(userId, parseStatus(status));
+        } else if (hasSearch) {
+            tasks = taskRepository.findByOwnerIdAndTitleContainingIgnoreCaseOrderByIdAsc(userId, search);
+        } else {
+            tasks = taskRepository.findByOwnerIdOrderByIdAsc(userId);
+        }
+
+        return tasks.stream()
                 .map(TaskResponse::from)
                 .toList();
     }

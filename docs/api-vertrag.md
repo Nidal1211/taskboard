@@ -54,7 +54,7 @@ Anfrage: { "title": "Einkaufen" }
 | 201 | Aufgabe angelegt | die neue Aufgabe, Status immer OPEN |
 | 400 | Titel leer oder nur Leerzeichen | "Titel darf nicht leer sein" |
 | 400 | Titel länger als 100 Zeichen | "Titel darf höchstens 100 Zeichen lang sein" |
-
+| 400 | Unbekannter Wert für status | "Ungültiger Status" |
 ### PUT /api/tasks/{id}  (TB-4)
 
 Anfrage: { "title": "Wocheneinkauf" }
