@@ -13,6 +13,7 @@ pipeline {
         SPRING_DATASOURCE_URL = 'jdbc:postgresql://db:5432/taskboard_test'
         SERVER_PORT = '8081'
         MAVEN_OPTS = '-Xmx512m'
+        JIRA_URL = 'https://nidhal-taskboard.atlassian.net'
     }
 
     stages {
@@ -58,9 +59,13 @@ pipeline {
         }
     }
 
-    post {
+        post {
         always {
             junit allowEmptyResults: true, testResults: 'e2e-tests/target/surefire-reports/*.xml'
+            withCredentials([usernamePassword(credentialsId: 'jira-credentials',
+                    usernameVariable: 'JIRA_EMAIL', passwordVariable: 'JIRA_API_TOKEN')]) {
+                sh 'cd ai && python3 report_results.py ../e2e-tests/target/surefire-reports || echo "Rückmeldung an Jira fehlgeschlagen"'
+            }
             sh 'if [ -f backend/app.pid ]; then kill $(cat backend/app.pid) || true; fi'
             archiveArtifacts artifacts: 'backend/app.log', allowEmptyArchive: true
         }

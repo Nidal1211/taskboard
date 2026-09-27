@@ -12,7 +12,7 @@ services:
       - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
 
   jenkins:
-    image: jenkins/jenkins:lts-jdk17
+    build: ./docker/jenkins
     profiles: ["ci"]
     ports:
       - "8090:8080"
