@@ -53,7 +53,7 @@ pipeline {
         stage('API-Tests') {
             steps {
                 dir('backend') {
-                    sh './mvnw -B -f ../e2e-tests/pom.xml test -DbaseUrl=http://localhost:8081'
+                    sh './mvnw -B -f ../e2e-tests/pom.xml test -DbaseUrl=http://localhost:8081 -DexcludedGroups=ui'
                 }
             }
         }
