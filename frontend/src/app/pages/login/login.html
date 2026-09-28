@@ -1,0 +1,21 @@
+<h1>Anmelden</h1>
+
+@if (info) {
+  <p class="info" data-testid="login-info">{{ info }}</p>
+}
+
+<form (ngSubmit)="submit()" novalidate>
+  <label>E-Mail
+    <input data-testid="login-email" name="email" type="text" [(ngModel)]="email" />
+  </label>
+  <label>Passwort
+    <input data-testid="login-password" name="password" type="password" [(ngModel)]="password" />
+  </label>
+  <button data-testid="login-submit" type="submit" [disabled]="!email || !password">Anmelden</button>
+</form>
+
+@if (error()) {
+  <p class="error" data-testid="login-error">{{ error() }}</p>
+}
+
+<p>Noch kein Konto? <a routerLink="/register" data-testid="link-register">Registrieren</a></p>
