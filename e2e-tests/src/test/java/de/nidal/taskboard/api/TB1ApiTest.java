@@ -27,7 +27,7 @@ class TB1ApiTest {
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = BASE_URL;
-        given().when().post("/tSest/reset").then().statusCode(204);
+        given().when().post("/test/reset").then().statusCode(204);
     }
 
     private Response register(String email, String password) {
