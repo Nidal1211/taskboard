@@ -105,7 +105,7 @@ Im Bearbeitungsmodus ersetzt ein Eingabefeld den Titel.
 | `task-edit-input` | Eingabefeld Titel | enthält den bisherigen Titel |
 | `task-save` | Button „Speichern“ | speichert den neuen Titel; bei einem Fehler erscheint `task-error`, und der alte Titel bleibt erhalten |
 | `task-cancel-edit` | Button „Abbrechen“ | beendet den Bearbeitungsmodus ohne Änderung |
-
+|Es ist immer höchstens eine Aufgabe gleichzeitig im Bearbeitungsmodus.
 ### Sicherheitsabfrage beim Löschen (TB-4)
 
 | data-testid | Element | Verhalten |
