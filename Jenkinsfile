@@ -64,7 +64,8 @@ pipeline {
                 dir('frontend') {
                     sh 'npm ci'
                     sh '''
-                        JENKINS_NODE_COOKIE=dontKillMe nohup npx ng serve --proxy-config proxy.ci.json --port 4200 \
+                        pkill -f "ng serve" || true
+                        JENKINS_NODE_COOKIE=dontKillMe setsid nohup npx ng serve --proxy-config proxy.ci.json --port 4200 \
                             > frontend.log 2>&1 &
                         echo $! > frontend.pid
                     '''
@@ -102,8 +103,7 @@ pipeline {
             }
             sh 'if [ -f backend/app.pid ]; then kill $(cat backend/app.pid) || true; fi'
             archiveArtifacts artifacts: 'backend/app.log', allowEmptyArchive: true
-            sh 'if [ -f frontend/frontend.pid ]; then kill $(cat frontend/frontend.pid) || true; fi'
-            archiveArtifacts artifacts: 'frontend/frontend.log', allowEmptyArchive: true
+            sh 'if [ -f frontend/frontend.pid ]; then kill -- -$(cat frontend/frontend.pid) || true; fi'
         }
     }
 }
