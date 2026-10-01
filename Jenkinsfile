@@ -59,7 +59,7 @@ pipeline {
             }
         }
 
-                stage('Frontend starten') {
+        stage('Frontend starten') {
             steps {
                 dir('frontend') {
                     sh 'npm ci'
