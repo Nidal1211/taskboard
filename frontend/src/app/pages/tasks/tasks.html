@@ -1,3 +1,62 @@
 <h1 data-testid="tasks-title">Meine Aufgaben</h1>
-<p>Hier entsteht die Aufgabenliste.</p>
 <button data-testid="logout" type="button" (click)="logout()">Abmelden</button>
+
+<form (ngSubmit)="addTask()" novalidate>
+  <label>Neue Aufgabe
+    <input data-testid="new-task-title" name="title" type="text" [(ngModel)]="newTitle" />
+  </label>
+  <button data-testid="new-task-submit" type="submit">Hinzufügen</button>
+</form>
+
+@if (error()) {
+  <p class="error" data-testid="task-error">{{ error() }}</p>
+}
+
+<div>
+  <label>Status
+    <select data-testid="filter-status" name="filterStatus" [(ngModel)]="filterStatus" (ngModelChange)="loadTasks()">
+      <option value="ALL">Alle</option>
+      @for (option of statusOptions; track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+  </label>
+  <label>Suche
+    <input data-testid="search-input" name="search" type="text" [(ngModel)]="search" (ngModelChange)="loadTasks()" />
+  </label>
+</div>
+
+@if (tasks().length === 0) {
+  <p data-testid="tasks-empty">Keine Aufgaben gefunden</p>
+}
+
+<ul>
+  @for (task of tasks(); track task.id) {
+    <li data-testid="task-item">
+      @if (editingId() === task.id) {
+        <form (ngSubmit)="saveEdit(task)" novalidate>
+          <input data-testid="task-edit-input" name="editTitle" type="text" [(ngModel)]="editTitle" />
+          <button data-testid="task-save" type="submit">Speichern</button>
+          <button data-testid="task-cancel-edit" type="button" (click)="cancelEdit()">Abbrechen</button>
+        </form>
+      } @else {
+        <span data-testid="task-title">{{ task.title }}</span>
+        <button data-testid="task-edit" type="button" (click)="startEdit(task)">Bearbeiten</button>
+      }
+      <select data-testid="task-status" name="status-{{ task.id }}" (change)="changeStatus(task, $any($event.target).value)">
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value" [selected]="option.value === task.status">{{ option.label }}</option>
+        }
+      </select>
+      <button data-testid="task-delete" type="button" (click)="askDelete(task)">Löschen</button>
+    </li>
+  }
+</ul>
+
+@if (taskToDelete()) {
+  <div data-testid="delete-dialog" role="dialog" aria-modal="true">
+    <p>Aufgabe wirklich löschen?</p>
+    <button data-testid="delete-confirm" type="button" (click)="confirmDelete()">Ja, löschen</button>
+    <button data-testid="delete-cancel" type="button" (click)="cancelDelete()">Abbrechen</button>
+  </div>
+}
