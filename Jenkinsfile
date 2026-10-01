@@ -3,6 +3,7 @@ pipeline {
 
     options {
         timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
     }
 
     triggers {
@@ -57,6 +58,39 @@ pipeline {
                 }
             }
         }
+
+                stage('Frontend starten') {
+            steps {
+                dir('frontend') {
+                    sh 'npm ci'
+                    sh '''
+                        JENKINS_NODE_COOKIE=dontKillMe nohup npx ng serve --proxy-config proxy.ci.json --port 4200 \
+                            > frontend.log 2>&1 &
+                        echo $! > frontend.pid
+                    '''
+                }
+                sh '''
+                    for i in $(seq 1 90); do
+                        if curl -sf http://localhost:4200 > /dev/null; then
+                            echo "Frontend ist bereit"
+                            exit 0
+                        fi
+                        sleep 2
+                    done
+                    echo "Frontend ist nicht gestartet:"
+                    cat frontend/frontend.log
+                    exit 1
+                '''
+            }
+        }
+
+        stage('UI-Tests') {
+            steps {
+                dir('backend') {
+                    sh './mvnw -B -f ../e2e-tests/pom.xml test -Dgroups=ui -DbaseUrl=http://localhost:8081 -DfrontendUrl=http://localhost:4200'
+                }
+            }
+        }
     }
 
         post {
@@ -68,6 +102,8 @@ pipeline {
             }
             sh 'if [ -f backend/app.pid ]; then kill $(cat backend/app.pid) || true; fi'
             archiveArtifacts artifacts: 'backend/app.log', allowEmptyArchive: true
+            sh 'if [ -f frontend/frontend.pid ]; then kill $(cat frontend/frontend.pid) || true; fi'
+            archiveArtifacts artifacts: 'frontend/frontend.log', allowEmptyArchive: true
         }
     }
 }

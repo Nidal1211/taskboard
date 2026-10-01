@@ -14,17 +14,18 @@ def collect_results(report_dir):
     results = {}
     for path in glob.glob(os.path.join(report_dir, "TEST-*.xml")):
         suite = ET.parse(path).getroot()
-        match = re.search(r"TB(\d+)ApiTest$", suite.get("name", ""))
+        match = re.search(r"TB(\d+)(Api|Ui)Test$", suite.get("name", ""))
         if not match:
             continue
         story_key = f"TB-{match.group(1)}"
         cases = suite.findall("testcase")
         failed = [
-            case.get("name")
+            f"{match.group(2)}: {case.get('name')}"
             for case in cases
             if case.find("failure") is not None or case.find("error") is not None
         ]
-        results[story_key] = (len(cases), failed)
+        total, previous_failed = results.get(story_key, (0, []))
+        results[story_key] = (total + len(cases), previous_failed + failed)
     return results
 
 
