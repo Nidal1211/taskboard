@@ -16,13 +16,7 @@ import de.nidal.taskboard.ui.pages.TasksPage;
 @Tag("TB-5")
 class TB5UiTest extends UiTestBase {
 
-    private void createTaskViaApi(String token, String taskTitle) {
-        given().contentType("application/json")
-                .header("Authorization", "Bearer " + token)
-                .body(Map.of("title", taskTitle))
-                .post("/api/tasks")
-                .then().statusCode(201);
-    }
+    
 
     private void changeStatusViaApi(String token, String taskTitle, String status) {
         int id = given().contentType("application/json")
@@ -120,20 +114,22 @@ class TB5UiTest extends UiTestBase {
     @DisplayName("Filter und Suche kombiniert")
     void filterUndSucheKombiniert() {
         String token = setUpBasicTasks();
+        createTaskViaApi(token, "Wäsche waschen");
+        changeStatusViaApi(token, "Wäsche waschen", "IN_PROGRESS");
         signInWithToken(token);
 
         TasksPage tasksPage = new TasksPage(page).open();
 
         assertThat(tasksPage.taskItemByTitle("Einkaufen")).isVisible();
-        assertThat(tasksPage.taskItems()).hasCount(3);
+        assertThat(tasksPage.taskItems()).hasCount(4);
 
         tasksPage.filterByStatus("IN_PROGRESS");
         tasksPage.searchFor("Einkauf");
 
         assertThat(tasksPage.taskItems()).hasCount(1);
         assertThat(tasksPage.taskItemByTitle("Einkaufsliste schreiben")).isVisible();
+        assertThat(tasksPage.taskItemByTitle("Wäsche waschen")).not().isVisible();
     }
-
     @Test
     @DisplayName("Keine Treffer")
     void keineTreffer() {

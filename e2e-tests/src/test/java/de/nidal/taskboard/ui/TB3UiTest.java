@@ -17,13 +17,7 @@ import de.nidal.taskboard.ui.pages.TasksPage;
 @Tag("TB-3")
 class TB3UiTest extends UiTestBase {
 
-    private void createTaskViaApi(String token, String taskTitle) {
-        given().contentType("application/json")
-                .header("Authorization", "Bearer " + token)
-                .body(Map.of("title", taskTitle))
-                .post("/api/tasks")
-                .then().statusCode(201);
-    }
+    
 
     @Test
     @DisplayName("Aufgabe erfolgreich anlegen")

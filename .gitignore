@@ -17,3 +17,7 @@ bin/
 .classpath
 .settings/
 .factorypath
+e2e-tests/src/test/java/de/nidal/taskboard/ui/LoginFehlerUiTest.java
+e2e-tests/src/test/java/de/nidal/taskboard/ui/passwort.java
+e2e-tests/src/test/java/de/nidal/taskboard/ui/RegisterFormularUiTest.java
+e2e-tests/src/test/java/de/nidal/taskboard/ui/pages/RegisterPage.java

@@ -44,7 +44,8 @@ Ausgabe:
 14. Gib jede Datei mit einer Zeile === FILE: <Pfad> === aus, gefolgt vom vollstaendigen Java-Code. Der Pfad ist relativ zum Package ui, zum Beispiel {class_name}.java oder pages/TasksPage.java.
 15. Antworte nur mit den Dateien, ohne Erklaerungen und ohne Markdown.
 16. Ein Locator muss auch nach einer Aktion noch passen. Findet ein Test ein Element ueber einen Text oder ein Kindelement, das sich durch die Aktion aendert oder verschwindet, suche die Folgeelemente auf andere Weise, zum Beispiel direkt auf der Seite, wenn sie dort eindeutig sind.
-17. Pruefe bei jeder Aenderung an Daten, also Anlegen, Aendern und Loeschen, zusaetzlich nach page.reload(), dass sie auf dem Server gespeichert wurde. Das gilt auch, wenn die Story das Neuladen nicht ausdruecklich nennt, und ebenso fuer Abbrechen-Szenarien, in denen nichts gespeichert werden darf."""
+17. Pruefe bei jeder Aenderung an Daten, also Anlegen, Aendern und Loeschen, zusaetzlich nach page.reload(), dass sie auf dem Server gespeichert wurde. Das gilt auch, wenn die Story das Neuladen nicht ausdruecklich nennt, und ebenso fuer Abbrechen-Szenarien, in denen nichts gespeichert werden darf.
+18. Pruefe bei kombinierten Bedingungen, ob die Testdaten aus der Story jede Bedingung einzeln unterscheidbar machen. Liefert eine Bedingung allein schon das erwartete Ergebnis, schreibe einen TODO-Kommentar, dass die Story um passende Testdaten ergaenzt werden sollte."""
 
 
 def read_templates():

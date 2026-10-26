@@ -79,4 +79,12 @@ public abstract class UiTestBase {
     protected void signInWithToken(String token) {
         context.addInitScript("window.localStorage.setItem('token', '" + token + "')");
     }
+
+    protected void createTaskViaApi(String token, String taskTitle) {
+        given().contentType("application/json")
+                .header("Authorization", "Bearer " + token)
+                .body(Map.of("title", taskTitle))
+                .post("/api/tasks")
+                .then().statusCode(201);
+    }
 }

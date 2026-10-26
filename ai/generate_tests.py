@@ -37,7 +37,8 @@ Regeln:
 16. Verwende die konkreten Beispielwerte aus der Story exakt, zum Beispiel die genannte Anzahl Leerzeichen oder die genannten Titel.
 17. Nenne im Kommentar zu Oberflaechen-Teilen nur Schritte, die woertlich in der Story stehen. Erfinde keine zusaetzlichen Anforderungen.
 18. Jede Pruefung muss fehlschlagen koennen, wenn die App sich falsch verhaelt. Pruefe keine Dinge, die unabhaengig vom getesteten Schritt immer gelten. Beweise zum Beispiel, dass nach einem fehlgeschlagenen Login niemand angemeldet ist, dadurch, dass die Antwort keinen Token enthaelt.
-19. Bei Szenarien zum Schutz fremder Daten teste jeden Endpunkt aus dem API-Vertrag, mit dem diese Daten gelesen, veraendert oder geloescht werden koennen, nicht nur eine Auswahl."""
+19. Bei Szenarien zum Schutz fremder Daten teste jeden Endpunkt aus dem API-Vertrag, mit dem diese Daten gelesen, veraendert oder geloescht werden koennen, nicht nur eine Auswahl.
+20.Pruefe bei kombinierten Bedingungen, ob die Testdaten aus der Story jede Bedingung einzeln unterscheidbar machen. Liefert eine Bedingung allein schon das erwartete Ergebnis, schreibe einen TODO-Kommentar, dass die Story um passende Testdaten ergaenzt werden sollte."""
 
 
 def generate_test(story_key):

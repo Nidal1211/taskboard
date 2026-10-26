@@ -20,14 +20,7 @@ import de.nidal.taskboard.ui.pages.TasksPage;
 @Tag("TB-4")
 class TB4UiTest extends UiTestBase {
 
-    private void createTaskViaApi(String token, String taskTitle) {
-        given().contentType("application/json")
-                .header("Authorization", "Bearer " + token)
-                .body(Map.of("title", taskTitle))
-                .post("/api/tasks")
-                .then().statusCode(201);
-    }
-
+    
     @Test
     @DisplayName("Titel erfolgreich ändern")
     void titelErfolgreichAendern() {
@@ -118,9 +111,13 @@ class TB4UiTest extends UiTestBase {
 
         assertThat(tasksPage.deleteDialog()).not().isVisible();
         assertThat(tasksPage.taskItems()).hasCount(0);
+
+        page.reload();
+        assertThat(tasksPage.title()).isVisible();
+        assertThat(tasksPage.taskItems()).hasCount(0);
     }
 
-    @Test
+        @Test
     @DisplayName("Löschen abbrechen")
     void loeschenAbbrechen() {
         register("nidal@test.de", "geheim123");
@@ -139,6 +136,10 @@ class TB4UiTest extends UiTestBase {
         tasksPage.deleteCancelButton().click();
 
         assertThat(tasksPage.deleteDialog()).not().isVisible();
+        assertThat(tasksPage.taskItemByTitle("Einkaufen")).isVisible();
+        assertThat(tasksPage.taskItems()).hasCount(1);
+
+        page.reload();
         assertThat(tasksPage.taskItemByTitle("Einkaufen")).isVisible();
         assertThat(tasksPage.taskItems()).hasCount(1);
     }
