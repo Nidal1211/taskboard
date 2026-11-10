@@ -47,7 +47,7 @@ Adresse: `/login`
 | `login-password` | Eingabefeld Passwort | |
 | `login-submit` | Button „Anmelden“ | deaktiviert, solange ein Feld leer ist |
 | `login-error` | Fehlermeldung | erscheint nur bei einem Fehler, zeigt die Meldung des Backends |
-| `link-register` | Link „Registrieren“ | führt zu `/register` |
+| `link-register` | Button „Konto erstellen“ | führt zu `/register` |
 
 Nach erfolgreicher Anmeldung: Weiterleitung auf `/tasks`.
 
